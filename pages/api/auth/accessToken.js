@@ -4,6 +4,7 @@ import valid from '../../../utils/valid'
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import jwt from 'jsonwebtoken'
 import {createAccessToken} from '../../../utils/generateTokens'
+import { withSecureHeaders } from "next-secure-headers";
 
 
 connectdb()
@@ -17,14 +18,14 @@ export default async(req,res) => {
     const result = jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET)
       if(!result) return res.status(400).json({err: 'Your token is incorrect or has expired!'})
 
-      const user = await Users.findbyId(result.id)
+      const user = await Users.findbyId(result.username)
       if(!user) return.res.status(400).json({err: 'User does not exist...'})
 
-      const accesstoken = createAccessToken({id: user._id})
+      const accesstoken = createAccessToken({id: user.username})
       res.json{
         accesstoken,
         user: {
-          username: user.name,
+          username: user.username,
           email: user.email,
           role: user.role,
           avatar: user.avatar,

@@ -2,6 +2,7 @@ import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
 import valid from '../../../utils/valid'
 import bcrypt from 'bcrypt'
+import { withSecureHeaders } from "next-secure-headers";
 
 
 connectdb()
@@ -34,7 +35,13 @@ const register = async (req, res) => {
         })
 
         await newUser.save()
-        res.json({msg: "Register Success!"})
+
+
+
+        res.json({
+          Status: "Success!"
+
+        })
 
     }catch(err){
         return res.status(500).json({err: err.message})

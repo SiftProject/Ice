@@ -2,6 +2,11 @@ import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
 import valid from '../../../utils/valid'
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
+import bcrypt from 'bcrypt'
+import requestIp from 'request-ip'
+import { withSecureHeaders } from "next-secure-headers";
+
+
 
 
 connectdb()
@@ -23,24 +28,20 @@ const login = async (req, res) => {
         const user = await Users.findOne({ username })
         if(!user) return res.status(400).json({err: 'This username does not exist!'})
 
-        const passwordHash = await bcrypt.hash(password, 12)
 
         const matchpw = await bcrypt.compare(password, user.password)
-        if(!matchpw) return res.status(400).json({err: 'This password is incorrect'})
+        if(!matchpw) return res.status(400).json({err: 'Oops something went wrong...'})
 
-        const accesstoken = createAccessToken({id: user._id})
-        const refreshtoken = createRefreshToken({id: user._id})
+        const accesstoken = createAccessToken({User: user.username, Id: user._id})
+        const refreshtoken = createRefreshToken({User: user.username, Id: user._id})
 
         res.json({
-          msg: "Login Success!",
-          refreshtoken,
-          accesstoken,
+          Status: "Login success!",
+          AuthToken: accesstoken,
+          RefreshToken: refreshtoken,
           user: {
-            username: user.name,
-            email: user.email,
-            role: user.role,
-            avatar: user.avatar,
-            root: user.root
+            username: user.username,
+            email: user.email
           }
         })
 

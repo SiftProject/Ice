@@ -1,5 +1,5 @@
 import connectdb from "../../../utils/connectdb"
-import Users from "../../../models/userModel"
+import auth from '../../../middle/auth'
 import valid from '../../../utils/valid'
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import { withSecureHeaders } from "next-secure-headers";
@@ -17,11 +17,11 @@ export default async (req, res) => {
 
 const checkbalance = async (req, res) => {
     try{
-        const { username } = req.body
-        const user = await Users.findOne({ username })
-        const balance = user.balance
+        const result = await auth(req, res)
+        const user = result.balance
+        res.json({Balance: user
 
-        res.json({msg: user.username + " balance is "+balance})
+        })
 
 
 

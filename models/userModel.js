@@ -14,17 +14,13 @@ const userSchema = new mongoose.Schema({
          type: String,
          required: true
      },
-     balance: {
-       type: Number,
-       default: 0
-     },
      role: {
          type: String,
          default: 'user'
      },
-     admin: {
-         type: Boolean,
-         default: false
+     balance: {
+         type: Number,
+         default: 0,
      },
      avatar: {
          type: String,

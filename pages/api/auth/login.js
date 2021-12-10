@@ -5,6 +5,7 @@ import {createAccessToken, createRefreshToken} from '../../../utils/generateToke
 import bcrypt from 'bcrypt'
 import requestIp from 'request-ip'
 import { withSecureHeaders } from "next-secure-headers";
+import Wallet from '../../../models/transactionModel'
 
 
 
@@ -32,16 +33,18 @@ const login = async (req, res) => {
         const matchpw = await bcrypt.compare(password, user.password)
         if(!matchpw) return res.status(400).json({err: 'Oops something went wrong...'})
 
-        const accesstoken = createAccessToken({User: user.username, Id: user._id})
-        const refreshtoken = createRefreshToken({User: user.username, Id: user._id})
+        const accesstoken = createAccessToken({User: user.username, Balance: user.balance})
+        const refreshtoken = createRefreshToken({User: user.username, Balance: user.balance})
 
         res.json({
           Status: "Login success!",
-          AuthToken: accesstoken,
+          AccessToken: accesstoken,
           RefreshToken: refreshtoken,
           user: {
             username: user.username,
-            email: user.email
+            email: user.email,
+            role: user.role,
+            balanace: user.balance
           }
         })
 

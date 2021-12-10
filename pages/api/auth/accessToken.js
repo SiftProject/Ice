@@ -1,6 +1,5 @@
 import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
-import valid from '../../../utils/valid'
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import jwt from 'jsonwebtoken'
 import {createAccessToken} from '../../../utils/generateTokens'
@@ -19,10 +18,10 @@ export default async(req,res) => {
       if(!result) return res.status(400).json({err: 'Your token is incorrect or has expired!'})
 
       const user = await Users.findbyId(result.username)
-      if(!user) return.res.status(400).json({err: 'User does not exist...'})
+      if(!user) return res.status(400).json({err: 'User does not exist...'})
 
-      const accesstoken = createAccessToken({id: user.username})
-      res.json{
+      const accesstoken = createAccessToken({username: user.username})
+      res.json({
         accesstoken,
         user: {
           username: user.username,
@@ -31,7 +30,7 @@ export default async(req,res) => {
           avatar: user.avatar,
           root: user.root
         }
-      }
+      })
 }catch(err) {
   return res.status(500).json({err: err.message})
 

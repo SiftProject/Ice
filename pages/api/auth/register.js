@@ -35,7 +35,7 @@ const register = async (req, res) => {
             username, email, password: passwordHash, cf_password
         })
         const newWallet = new Wallet({
-            user: username
+            username: username
         })
 
         await newUser.save()

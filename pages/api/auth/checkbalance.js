@@ -19,7 +19,7 @@ const checkbalance = async (req, res) => {
     try{
         const { username } = req.body
         const user = await Users.findOne({ username })
-        const balance = user.balance[0]
+        const balance = user.balance
 
         res.json({msg: user.username + " balance is "+balance})
 

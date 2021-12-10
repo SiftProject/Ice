@@ -26,7 +26,7 @@
     "pages/api/hello.ts",
     "pages/index.tsx",
     "pages/_app.tsx"
-  ],
+, "utils/connectdb.js"  ],
   "exclude": [
     "node_modules"
   ]

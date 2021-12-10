@@ -1,5 +1,6 @@
 import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
+import Wallet from "../../../models/transactionModel"
 import valid from '../../../utils/valid'
 import bcrypt from 'bcrypt'
 import { withSecureHeaders } from "next-secure-headers";
@@ -33,8 +34,12 @@ const register = async (req, res) => {
         const newUser = new Users({
             username, email, password: passwordHash, cf_password
         })
+        const newWallet = new Wallet({
+            user: username
+        })
 
         await newUser.save()
+        await newWallet.save()
 
 
 

@@ -2,6 +2,7 @@ import connectdb from "../../../utils/connectdb";
 import Users from "../../../models/userModel";
 import valid from "../../../utils/valid";
 import bcrypt from "bcrypt";
+import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 
 import { withSecureHeaders } from "next-secure-headers";
 
@@ -33,14 +34,18 @@ const register = async (req, res) => {
             username, email, password: passwordHash, cf_password
         })
        
-
         await newUser.save()
-       
+
+
+        const accesstoken = createAccessToken({User: username})
+        const refreshtoken = createRefreshToken({User: username})
 
 
 
         res.json({
-          Status: "Success!"
+          Status: "Success!",
+          AccessToken: accesstoken,
+          RefreshToken: refreshtoken
 
         })
 

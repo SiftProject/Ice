@@ -33,8 +33,8 @@ const login = async (req, res) => {
         const matchpw = await bcrypt.compare(password, user.password)
         if(!matchpw) return res.status(400).json({err: 'Oops something went wrong...'})
 
-        const accesstoken = createAccessToken({User: user.username, Balance: user.balance})
-        const refreshtoken = createRefreshToken({User: user.username, Balance: user.balance})
+        const accesstoken = createAccessToken({User: user.username})
+        const refreshtoken = createRefreshToken({User: user.username})
 
         res.json({
           Status: "Login success!",

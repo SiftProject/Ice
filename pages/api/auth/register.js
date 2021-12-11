@@ -1,20 +1,19 @@
-import connectdb from "../../../utils/connectdb"
-import Users from "../../../models/userModel"
-import valid from '../../../utils/valid'
-import bcrypt from 'bcrypt'
+import connectdb from "../../../utils/connectdb";
+import Users from "../../../models/userModel";
+import valid from "../../../utils/valid";
+import bcrypt from "bcrypt";
+
 import { withSecureHeaders } from "next-secure-headers";
 
-
-connectdb()
-
+connectdb();
 
 export default async (req, res) => {
-    switch(req.method){
-        case "POST":
-            await register(req, res)
-            break;
-    }
-}
+  switch (req.method) {
+    case "POST":
+      await register(req, res);
+      break;
+  }
+};
 
 const register = async (req, res) => {
     try{

@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 
+
 import Layout from "../components/general/layout";
 import store from "../redux/store";
+import '../styles/globals.sass'
 
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {

@@ -1,9 +1,8 @@
 import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
-import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
+import {createAccessToken} from '../../../utils/generateTokens'
 import jwt from 'jsonwebtoken'
 import {createAccessToken} from '../../../utils/generateTokens'
-import { withSecureHeaders } from "next-secure-headers";
 
 
 connectdb()

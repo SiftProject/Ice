@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const CasesSchema = new mongoose.Schema({
-  name: {
+  caseName: {
     type: String,
     required: true
   },
@@ -9,14 +9,15 @@ const CasesSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  caseImage: {
+    type: String,
+    required: true
+  },
   content: {
       type: Array,
       required: true
-  },
-  image: {
-      type: Array,
-      required: true
   }
+
  }, {
      timestamps: true
  })

@@ -1,6 +1,6 @@
-import connectdb from "../../utils/connectdb"
-import Cases from "../../models/casesModel"
-import auth from '../../middle/auth'
+import connectdb from "../../../utils/connectdb"
+import Cases from "../../../models/casesModel"
+import auth from '../../../middle/auth'
 
 connectdb()
 
@@ -18,15 +18,15 @@ const createcase = async (req, res) => {
         const result = await auth(req, res)
         if(result.role !== 'admin') 
         return res.status(400).json({err: 'Authentication is not valid.'})
-        const { name, price , content, image} = req.body
+        const { caseName, price , content, caseImage} = req.body
 
 
-        const case3 = await Cases.findOne({ name })
+        const case3 = await Cases.findOne({ caseName })
         if(case3) return res.status(400).json({err: 'This case already exists.'})
       
 
         const newcases = new Cases({
-             name, price, content , image
+            caseName, caseImage, price,  content
         })
 
         await newcases.save()

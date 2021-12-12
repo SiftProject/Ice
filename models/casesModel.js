@@ -22,5 +22,5 @@ const CasesSchema = new mongoose.Schema({
      timestamps: true
  })
 
- let Dataset = mongoose.models.case || mongoose.model('Cases', CasesSchema)
- export default Dataset
+ let Dataset2 = mongoose.models.case || mongoose.model('Cases', CasesSchema)
+ export default Dataset2

@@ -39,5 +39,7 @@ function validateUsername(username) {
 }
 
 
-
+function validateinput(username,email,password,cf_password) {
+    
+}
 

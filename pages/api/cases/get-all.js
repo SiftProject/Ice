@@ -1,7 +1,7 @@
 import connectdb from "../../../utils/connectdb";
 import Cases from "../../../models/casesModel";
 
-// connectdb();
+ connectdb();
 
 export default async (req, res) => {
   switch (req.method) {

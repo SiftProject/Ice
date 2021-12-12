@@ -11,7 +11,7 @@ connectdb()
 
 export default async(req,res) => {
   try{
-    const rf_token = req.cookies.refreshtoken;
+    const rf_token = req.headers.authorization;
     if(!rf_token) return res.status(400).json({err: 'Please login!!!'})
 
     const result = jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET)

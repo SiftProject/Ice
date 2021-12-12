@@ -16,11 +16,11 @@ export default async (req, res) => {
 
     const getcases = async (req, res) => {
         try {
-            const features = new (Cases.find(req.query))
+            var query = { cases };
           
     
-            const cases = await features.query
-            
+            const cases = await query
+            console.log(query)
             res.json({
                 status: 'success',
                 result: cases.length,

@@ -10,7 +10,7 @@ const CasesSchema = new mongoose.Schema({
     required: true
   },
   content: {
-      type: String,
+      type: Array,
       required: true
   },
   image: {

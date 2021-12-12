@@ -4,7 +4,6 @@ import valid from "../../../utils/valid";
 import bcrypt from "bcrypt";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 
-import { withSecureHeaders } from "next-secure-headers";
 
 connectdb();
 

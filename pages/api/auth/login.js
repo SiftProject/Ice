@@ -1,11 +1,8 @@
 import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
-import valid from '../../../utils/valid'
+import {validlogin} from "../../../utils/valid";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import bcrypt from 'bcrypt'
-import requestIp from 'request-ip'
-import { withSecureHeaders } from "next-secure-headers";
-import Wallet from '../../../models/transactionModel'
 
 
 
@@ -24,6 +21,9 @@ export default async (req, res) => {
 const login = async (req, res) => {
     try{
         const { username, password } = req.body
+
+        const errMsg = validlogin(username, password)
+        if(errMsg) return res.status(400).json({err: errMsg})
 
 
         const user = await Users.findOne({ username })

@@ -2,12 +2,14 @@ import { useState } from "react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import styles from '../../styles/login.module.sass'
+import {validlogin} from '../../utils/valid'
+import { postData } from "../../utils/fetchdata";
 
 const Login = () => {
     const dispatch = useDispatch();
-    const originalState = { email: "", password: "" };
+    const originalState = { username: "", password: "" };
     const [userData, setUserData] = useState(originalState);
-    const { email, password } = userData;
+    const { username, password } = userData;
 
     const handleInputchange = (e) => {
         const { name, value } = e.target;
@@ -16,9 +18,13 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('login sumitted')
-    };
-
+        const errMsg = validlogin(username,password)
+    if (errMsg) console.log(errMsg)
+        console.log('login submitted...')
+    const res = await postData("/auth/login", userData);
+   
+      };
+    
     const closePop = () => dispatch({ type: "CLOSE_LOGIN" })
 
     return (
@@ -29,8 +35,8 @@ const Login = () => {
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.inputHolder}>
-                            <label>Email</label>
-                            <input name="email" value={email} onChange={handleInputchange} />
+                            <label>Username</label>
+                            <input name="username" value={username} onChange={handleInputchange} />
                         </div>
                         <div className={styles.inputHolder}>
                             <label>Password</label>

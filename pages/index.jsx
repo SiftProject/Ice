@@ -1,4 +1,4 @@
-import styles from "../styles/boxes.module.sass";
+import styles from '../components/_boxes/boxes.module.sass'
 
 
 const Boxes = ({ data }) => {

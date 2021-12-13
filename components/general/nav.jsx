@@ -1,37 +1,50 @@
 import Link from "next/link";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styles from '../../styles/nav.module.sass'
+import {useRouter} from 'next/router';
 
 const Nav = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log("the navbar moutned");
-  }, []);
+  const isAuthen = useSelector(store=>store.auth.isAuthen)
+  const router = useRouter()
+
+  const renderStatus =  ()=>{
+    if(isAuthen) return(
+      <div>
+        <div>balance:</div>
+        <div>name:</div>
+      </div>
+    )
+    if(!isAuthen) return (
+      <div className={styles.actionBtns}>
+        <button className={styles.signUp} onClick={() => dispatch({ type: "SHOW_SIGNUP" })}>Sign up</button>
+        <button className={styles.login} onClick={() => dispatch({ type: "SHOW_LOGIN" })}>Login</button>
+      </div>
+    )
+  }
 
   return (
-    <nav>
-      <h1>IceCase</h1>
+    <nav className={styles.nav}>
+      <h1 className={styles.title}>
+        <span>Ice</span>
+        Case
+      </h1>
 
-      <ul>
-        <li>
+      <ul className={styles.navLinks}>
+        <li  className={router.pathname === '/' ? styles.activeLi : null}>
           <Link href="/">Unboxing</Link>
         </li>
-        <li>
+        <li className={router.pathname === '/battles' ? styles.activeLi : null}>
           <Link href="/battles">Battles</Link>
         </li>
-        <li>
+        <li className={router.pathname === '/free-cases' ? styles.activeLi : null}>
           <Link href="/free-cases">Free Cases</Link>
         </li>
-        <li>
-          <Link href="/about">About</Link>
+        <li className={router.pathname === '/how-it-works' ? styles.activeLi : null}>
+          <Link href="/how-it-works">How it works</Link>
         </li>
       </ul>
-
-      <div>balance:</div>
-
-      <div>name:</div>
-      <button onClick={() => dispatch({ type: "SHOW_SIGNUP" })}>Sign up</button>
-      <button>Login</button>
+      {renderStatus()}
     </nav>
   );
 };

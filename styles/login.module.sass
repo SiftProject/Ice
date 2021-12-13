@@ -1,0 +1,96 @@
+$media-mobile: "only screen and (max-width : 1000px)"
+.loginPopParent
+    position: absolute
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100vw
+    background: rgba(0,0,0,.5)
+    z-index: 99
+    backdrop-filter: blur(10px)
+    .loginPop
+        background: #07171C
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        height: 60%
+        width: 50vw
+        display: flex
+        justify-content: space-between
+        align-items: center
+        @media #{$media-mobile}
+            width: 90%
+        .popLeft
+            height: 90%
+            width: 50%
+            margin-left: 5em
+            // background: pink
+            display: flex
+            flex-direction: column
+            justify-content: center
+            h1
+                height: 10%
+                margin-top: 1em
+
+            form
+                height: 75%
+                display: flex
+                flex-direction: column
+                justify-content: space-evenly
+                .inputHolder
+                    display: flex
+                    flex-direction: column
+                    label
+                        color: rgba(255, 255, 255, 0.7)
+                    input
+                        margin: 5px 0
+                        height: 2.8em
+                    small
+                        color: rgba(255, 255, 255, 0.7)
+                        cursor: pointer
+                        margin-top: 5px
+                button
+                    background:  #4074B4
+                    color: #fff
+                    height: 2.8em
+            p
+                height: 10%
+                color: #EEEEEE
+                span
+                    color: #6aa5ee
+                    font-weight: bold
+                    cursor: pointer
+        .popRight
+            height: 90%
+            width: 50%
+            margin-right: 5em
+            margin-left: 2em
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            p
+                color: #EEEEEE
+            .buttonsHolder
+                display: flex
+                flex-direction: column
+                width: 90%
+                .googleBtn
+                    background: #0F9D58
+                .fbBtn
+                    background: #3B5998
+                .steamBtn
+                    background: #00ADEE
+                button
+                    margin: .8em
+                    height: 3em
+                    color: white
+        .x
+            position: absolute
+            right: 0
+            top: 0
+            padding: .5em 1em
+            font-weight: bolder
+            cursor: pointer
+            font-size: 25px

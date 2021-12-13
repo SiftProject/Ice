@@ -17,6 +17,11 @@ const UiReducer = (state = initState, { type, payload }) => {
     case "CLOSE_SIGNUP":
       return { ...state, showSignup: { show: false } };
 
+    case 'SHOW_LOGIN':
+      return { ...state, showLogin: { show: true }}
+    
+    case 'CLOSE_LOGIN':
+      return { ...state, showLogin: { show: false }}
     default:
       return state;
   }

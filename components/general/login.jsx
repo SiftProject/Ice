@@ -52,13 +52,13 @@ const Login = () => {
                     </form>
                     <p>Already have an account? <span>Sign up</span></p>
                 </div>
-                <div className={styles.popRight}>
+               <div className={styles.popRight}>
                     <p>OR login with...</p>
                     <div className={styles.buttonsHolder}>
                         <button className={styles.googleBtn}>Google</button>
                         <button className={styles.steamBtn}>Steam</button>
                         <button className={styles.fbBtn}>Facebook</button>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>

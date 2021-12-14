@@ -14,6 +14,10 @@ export const validsignup = (username, email, password, cf_password) => {
 
     if(password !== cf_password)
     return 'Confirm password did not match.'
+
+if(!validatePassword(password))
+return 'Password must have at least one uppercase letter, one lowercase letter, one number and one special character'
+
 }
 
 export const validlogin = (username, password) => {
@@ -38,8 +42,12 @@ function validateUsername(username) {
     return re2.test(username)
 }
 
+function validatePassword(password) {
+    const re3 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    return re3.test(password)
+}
 
 function validateinput(username,email,password,cf_password) {
-    
+
 }
 

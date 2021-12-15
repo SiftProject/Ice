@@ -18,7 +18,9 @@ const enableauth = async (req, res) => {
     try{
     const result = await auth(req, res)
     const user = result.User
-    const newSecret = speakeasy.generateSecret({ name: "Icecase", account: user });
+    const user2 = await twofactor.findOne({ user })
+    if(user2) return res.status(400).json({err: 'This username already exists.'})
+    const newSecret = speakeasy.generateSecret();
     const enabled = new twofactor({
         username: user, ascii: newSecret.ascii, hex: newSecret.hex, base32: newSecret.base32, otpauth_url: newSecret.otpauth_url
     })

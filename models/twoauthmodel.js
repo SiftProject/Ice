@@ -20,10 +20,13 @@ const userSchema = new mongoose.Schema({
   otpauth_url: {
     type: String,
     required: true
+  },
+  secret: {
+    type: String
   }
  }, {
      timestamps: true
  })
 
- let Dataset3 = mongoose.models.twoauth || mongoose.model('twoauth', userSchema)
+ let Dataset3 = mongoose.models.twoauths || mongoose.model('twoauths', userSchema)
  export default Dataset3

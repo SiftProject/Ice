@@ -14,22 +14,24 @@ export default async (req, res) => {
 }
 
 const verifyauth = async (req, res) => {
+    const {token} = req.body
     try{
         const result = await auth(req, res)
         const user = result.User
-        const token = req.body
         const data = await twofactor.findOne({ user })
-        const secret = data.base
+        const {base32:secret} = data
         console.log(data)
-        console.log(secret)
+        console.log(token)
         const verified = speakeasy.totp.verify({
-            secret, token 
+            secret, encoding: 'base32', token: token, window: 2 
         })
-
+       
+        console.log(verified)
         if(verified) {
             const confirmed = new twofactor({
-                username: user, ascii: data.ascii, hex: data.hex, base: data.base32, otpauth_url: data.otpauth_url
+                Secret: secret, username: user, ascii: data.ascii, hex: data.hex, base: data.base32, otpauth_url: data.otpauth_url
             })
+            confirmed.update()
             res.json({verified: true})
         } else {
             res.json({verified: false})

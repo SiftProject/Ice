@@ -1,6 +1,5 @@
 import speakeasy from 'speakeasy'
 import connectdb from "../../../../utils/connectdb"
-import auth from '../../../../middle/auth'
 import twofactor from '../../../../models/twoauthmodel'
 
 connectdb()
@@ -14,10 +13,8 @@ export default async (req, res) => {
 }
 
 const verifyauth = async (req, res) => {
-    const {token} = req.body
+    const {token,user} = req.body
     try{
-        const result = await auth(req, res)
-        const user = result.User
         const data = await twofactor.findOne({ user })
         const {base32:secret} = data
     
@@ -27,6 +24,9 @@ const verifyauth = async (req, res) => {
        
         console.log(verified)
         if(verified) {
+            const confirmed = new twofactor({
+                username: user, ascii: data.ascii, hex: data.hex, base: data, otpauth_url: data.otpauth_url
+            })
             res.json({verified: true})
         } else {
             res.json({verified: false})

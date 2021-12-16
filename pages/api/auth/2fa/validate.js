@@ -14,10 +14,9 @@ export default async (req, res) => {
 }
 
 const validate = async (req, res) => {
-    const {token} = req.body
+    const {token,user} = req.body
     try{
-        const result = await auth(req, res)
-        const user = result.User
+      
         const data = await twofactor.findOne({ user })
         const {base32:secret} = data
     

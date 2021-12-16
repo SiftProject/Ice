@@ -3,8 +3,9 @@ import Users from "../../../models/userModel"
 import {validlogin} from "../../../utils/valid";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import bcrypt from 'bcrypt'
-
-
+import twofactor from '../../../models/twoauthmodel'
+import validate from ".//2fa/validate";
+import request from 'request'
 
 
 connectdb()
@@ -18,9 +19,10 @@ export default async (req, res) => {
 }
 
 
+
 const login = async (req, res) => {
     try{
-        const { username, password } = req.body
+        const { username, password, token } = req.body
 
         const errMsg = validlogin(username, password)
         if(errMsg) return res.status(400).json({err: errMsg})
@@ -32,22 +34,26 @@ const login = async (req, res) => {
 
         const matchpw = await bcrypt.compare(password, user.password)
         if(!matchpw) return res.status(400).json({err: 'Oops something went wrong...'})
-
         const accesstoken = createAccessToken({User: user.username})
         const refreshtoken = createRefreshToken({User: user.username})
 
-        res.json({
+        const twofactorenabled = await twofactor.findOne({ username })
+        if(twofactorenabled) {
+            if(!token) return res.json({Err: 'Needs token'})
+            res.json("Two auth enabled needs token and validation")
+            
+        } else {
+     res.json({
           Status: "Login success!",
           AccessToken: accesstoken,
           RefreshToken: refreshtoken,
           user: {
             username: user.username,
-            email: user.email,
             role: user.role,
             balanace: user.balance
           }
         })
-
+    }
     }catch(err){
         return res.status(500).json({err: err.message})
     }

@@ -1,6 +1,5 @@
 import speakeasy from 'speakeasy'
 import connectdb from "../../../../utils/connectdb"
-import auth from '../../../../middle/auth'
 import twofactor from '../../../../models/twoauthmodel'
 
 connectdb()
@@ -13,11 +12,11 @@ export default async (req, res) => {
     }
 }
 
-const validate = async (req, res) => {
-    const {token,user} = req.body
+export const validate = async (req, res) => {
+    const {token,username} = req.body
     try{
       
-        const data = await twofactor.findOne({ user })
+        const data = await twofactor.findOne({ username })
         const {base32:secret} = data
     
         const validated = speakeasy.totp.verify({
@@ -35,3 +34,4 @@ const validate = async (req, res) => {
         return res.status(500).json({Status: "Error generating the secret..."})
     }
 }
+

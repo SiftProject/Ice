@@ -4,8 +4,7 @@ import {validlogin} from "../../../utils/valid";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import bcrypt from 'bcrypt'
 import twofactor from '../../../models/twoauthmodel'
-import validate from ".//2fa/validate";
-import request from 'request'
+
 
 
 connectdb()

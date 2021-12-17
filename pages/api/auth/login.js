@@ -4,6 +4,7 @@ import {validlogin} from "../../../utils/valid";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import bcrypt from 'bcrypt'
 import twofactor from '../../../models/twoauthmodel'
+import speakeasy from 'speakeasy'
 
 
 
@@ -39,8 +40,27 @@ const login = async (req, res) => {
         const twofactorenabled = await twofactor.findOne({ username })
         if(twofactorenabled) {
             if(!token) return res.json({Err: 'Needs token'})
-            res.json("Two auth enabled needs token and validation")
-            
+            const data = await twofactor.findOne({ username })
+            const {base32:secret} = data
+        
+            const validated = speakeasy.totp.verify({
+                secret, encoding: 'base32', token: token, window: 1 
+            })
+           
+            if(validated) {
+                res.json({
+                    Status: "Login success!",
+                    AccessToken: accesstoken,
+                    RefreshToken: refreshtoken,
+                    user: {
+                      username: user.username,
+                      role: user.role,
+                      balanace: user.balance
+                    }
+                  })                
+            } else {
+                res.json({validated: false})
+            }
         } else {
      res.json({
           Status: "Login success!",

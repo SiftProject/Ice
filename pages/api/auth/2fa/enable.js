@@ -1,7 +1,7 @@
 import speakeasy from 'speakeasy'
-import Users from "../../../../models/userModel"
 import connectdb from "../../../../utils/connectdb"
 import auth from '../../../../middle/auth'
+import twofactor from '../../../../models/twoauthmodel'
 
 connectdb()
 
@@ -15,20 +15,25 @@ export default async (req, res) => {
 
 
 const enableauth = async (req, res) => {
+    try{
     const result = await auth(req, res)
     const user = result.User
-    const x = user.twoauth
-    const enabled = new Users({
-        twoauth: false
+    const user2 = await twofactor.findOne({ user })
+    if(user2) return res.status(400).json({err: 'This username already exists.'})
+    const newSecret = speakeasy.generateSecret();
+    const enabled = new twofactor({
+        username: user, ascii: newSecret.ascii, hex: newSecret.hex, base32: newSecret.base32, otpauth_url: newSecret.otpauth_url
     })
-   
-    console.log(user)
-    const newSecret = speakeasy.generateSecret({ name: "Icecase", account: user });
-    console.log(newSecret)
     enabled.save()
     res.json({
-        Status: "Twoauth enabled!"
-      })
+        Status: "Twoauth enabled!",
+        Secret: newSecret.base32
+      }) 
 
 
+}catch(err){
+    console.log(err)
+    return res.status(500).json({Status: "Error generating the secret..."})
+
+}
 }

@@ -59,7 +59,7 @@ const login = async (req, res) => {
                     }
                   })                
             } else {
-                res.json({validated: false})
+                res.json({Status: 'Token invalid..'})
             }
         } else {
      res.json({

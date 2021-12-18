@@ -1,0 +1,120 @@
+.boxesHeaderText
+    margin-top: 3em
+    color: #EEEEEE
+.filtersContainer
+    display: flex
+    justify-content: space-between
+    margin: 3em 0
+    // background: pink
+    height: 2.5em
+    .orderPart
+        display: flex
+        label
+            margin: auto 0
+            margin-right: 1em
+            font-size: 18px
+        select
+            background: #012B38
+            border: none
+            outline: none
+            color: white
+            font-weight: 300
+            height: 100%
+            font-family: 'Lexend'
+            // font-size: 16px
+            cursor: pointer
+            padding: 0 15px
+    .tagsPart
+        display: flex
+        .SelActive
+            background: #023D50
+            padding: 0 2em
+            align-self: left!important
+        li
+            margin: 0 10px
+            cursor: pointer
+            background: #012B38
+            display: flex
+            justify-content: center
+            align-items: center
+            padding: 0 20px
+            font-weight: 300
+            color: rgba(255, 255, 255, 0.7)
+    .searchPart
+        display: flex
+        width: 17%
+        .iconContainer
+            height: 100%
+            width: 2.4em
+            background-color:#012B38
+            display: flex
+            justify-content: center
+            align-items: center
+            .searchIcon
+                background-image: url('https://cdn.discordapp.com/attachments/765933010733760564/921794277980373062/unknown.png')
+                background-repeat: no-repeat
+                background-size: cover
+                background-position: center
+                display: block
+                height: 15px
+                width: 15px
+        input
+            outline: none
+            font-size: 15px
+            height: 100%
+            width: 100%
+            
+.boxesContainer
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+    grid-gap: 50px 50px
+    .boxItem
+        background: #001F28
+        display: flex
+        height: 27em
+        flex-direction: column
+        .imagePart
+            height: 50%
+            background: #01232E
+            display: flex
+            justify-content: center
+            align-items: center
+        .detailPart
+            height: 35%
+            padding: 1em
+            display: flex
+            flex-direction: column
+            justify-content: space-around
+            h1
+                font-weight: 400
+                font-size: 25px
+                text-transform: capitalize
+            .tags
+                display: flex
+                .hot
+                    color: #FF5858
+                    display: flex
+                    p
+                        margin-right: 1em
+                        margin-left: .5em
+                    img
+                        height: 20px
+                small
+                    color: rgba(255, 255, 255, 0.6)
+            .price
+                background: #88B9F5
+                width: 5em
+                height: 1.7em
+                color: #001F28
+                display: flex
+                justify-content: center
+                align-items: center
+                font-weight: bold
+
+        .btnPart
+            background: #023D50
+            height: 15%
+            display: flex
+            justify-content: center
+            align-items: center
+            font-size: 20px

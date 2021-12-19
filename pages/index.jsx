@@ -3,6 +3,7 @@ import { get } from "axios";
 import SingleBox from "../components/_boxes/single-box";
 import { useState } from "react";
 import BoxFilters from "../components/_boxes/filters";
+import Head from 'next/head'
 
 const Boxes = ({ data }) => {
   const defaultFilters = {
@@ -13,6 +14,9 @@ const Boxes = ({ data }) => {
   const [filters, setFilters] = useState(defaultFilters);
   return (
     <div>
+      <Head>
+        <title>IceCase | Home</title>
+      </Head>
       <div>
         <h1 className={styles.boxesHeaderText}>Mystery Cases</h1>
         <BoxFilters setFilters={setFilters} tag={filters.type} />

@@ -1,9 +1,13 @@
 import styles from './boxes.module.sass'
+import Head from 'next/head'
 
 const SingleBox = ({ props }) => {
     const { caseImage, casePrice, isHot, caseType, caseName } = props
-    return (
+    return (  
         <div className={styles.boxItem}>
+             <Head>
+        <title>IceCase | Cases</title>
+      </Head>
             <div className={styles.imagePart}>
                 <img alt="case image" height="170" src={caseImage} />
             </div>

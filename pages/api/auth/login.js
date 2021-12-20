@@ -31,8 +31,10 @@ const login = async (req, res) => {
         const user = await Users.findOne({ username })
         if(!user) return res.status(400).json({err: 'This username does not exist!'})
 
+
+
         const confirmed = user.confirmed
-        if(!confirmed) return res.status(400).json({err: 'You need to confirm your email...'})
+        if (confirmed === false) return res.status(400).json({err: 'Email is not verified'})
 
 
         const matchpw = await bcrypt.compare(password, user.password)

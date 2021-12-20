@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import crypto from 'crypto'
 import nodemailer from 'nodemailer'
+import requestIp from 'request-ip'
+
 
 export default async (req, res) => {
   switch (req.method) {
@@ -27,6 +29,9 @@ const register = async (req, res) => {
       connectdb();
         const { username, email, password, cf_password } = req.body
 
+        var ip = requestIp.getClientIp(req)
+
+
         const errMsg = validsignup(username, email, password, cf_password)
         if(errMsg) return res.status(400).json({err: errMsg})
 
@@ -39,7 +44,7 @@ const register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt)
 
         const newUser = new Users({
-            username, email, password: passwordHash, cf_password, confirmed: false, emailToken: crypto.randomBytes(64).toString('hex')
+            username, email, password: passwordHash, cf_password, ipaddress: ip, confirmed: false, emailToken: crypto.randomBytes(64).toString('hex')
         })
        
         await newUser.save()

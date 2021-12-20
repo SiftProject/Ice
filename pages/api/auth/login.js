@@ -31,15 +31,21 @@ const login = async (req, res) => {
         const user = await Users.findOne({ username })
         if(!user) return res.status(400).json({err: 'This username does not exist!'})
 
+        const confirmed = user.confirmed
+        if(!confirmed) return res.status(400).json({err: 'You need to confirm your email...'})
+
 
         const matchpw = await bcrypt.compare(password, user.password)
         if(!matchpw) return res.status(400).json({err: 'Oops something went wrong...'})
+
+
         const accesstoken = createAccessToken({User: user.username})
         const refreshtoken = createRefreshToken({User: user.username})
 
         const twofactorenabled = await twofactor.findOne({ username })
         if(twofactorenabled) {
             if(!token) return res.json({Err: 'Needs token'})
+
             const data = await twofactor.findOne({ username })
             const {base32:secret} = data
         

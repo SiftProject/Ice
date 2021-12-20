@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
      twoauth: {
         type: Boolean,
         default: false
+    },
+    emailToken: {
+        type: String
+    },
+    confirmed: {
+        type: Boolean
     }
  }, {
      timestamps: true

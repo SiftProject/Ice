@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
          type: String,
          required: true
      },
+     realtimeipaddress: {
+        type: String
+     },
      balance: {
          type: Number,
          default: 0,

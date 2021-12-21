@@ -1,14 +1,15 @@
 import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
+import ipmodel from "../../../models/ipModel"
 import {validlogin} from "../../../utils/valid";
 import {createAccessToken, createRefreshToken} from '../../../utils/generateTokens'
 import bcrypt from 'bcrypt'
 import twofactor from '../../../models/twoauthmodel'
 import speakeasy from 'speakeasy'
+import requestIp from 'request-ip'
 
 
 
-connectdb()
 
 export default async (req, res) => {
     switch(req.method){
@@ -22,7 +23,11 @@ export default async (req, res) => {
 
 const login = async (req, res) => {
     try{
+        connectdb()
+
         const { username, password, token } = req.body
+
+        var ip = requestIp.getClientIp(req)
 
         const errMsg = validlogin(username, password)
         if(errMsg) return res.status(400).json({err: errMsg})
@@ -44,6 +49,12 @@ const login = async (req, res) => {
         const accesstoken = createAccessToken({User: user.username})
         const refreshtoken = createRefreshToken({User: user.username})
 
+        const newUser = new ipmodel({
+            user: user.username, ipaddress: ip
+        })
+       
+        
+
         const twofactorenabled = await twofactor.findOne({ username })
         if(twofactorenabled) {
             if(!token) return res.json({Err: 'Needs token'})
@@ -54,8 +65,11 @@ const login = async (req, res) => {
             const validated = speakeasy.totp.verify({
                 secret, encoding: 'base32', token: token, window: 1 
             })
+
+       
            
             if(validated) {
+                await newUser.save()
                 res.json({
                     Status: "Login success!",
                     AccessToken: accesstoken,
@@ -70,6 +84,7 @@ const login = async (req, res) => {
                 res.json({Status: 'Token invalid..'})
             }
         } else {
+            await newUser.save()
      res.json({
           Status: "Login success!",
           AccessToken: accesstoken,

@@ -44,7 +44,7 @@ const register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt)
 
         const newUser = new Users({
-            username, email, password: passwordHash, cf_password, ipaddress: ip, confirmed: false, emailToken: crypto.randomBytes(64).toString('hex')
+            username, email, password: passwordHash, cf_password, realtimeipaddress: ip, ipaddress: ip, confirmed: false, emailToken: crypto.randomBytes(64).toString('hex')
         })
        
         await newUser.save()

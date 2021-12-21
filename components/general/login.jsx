@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import styles from '../../styles/login.module.sass'
-import {validlogin} from '../../utils/valid'
+import { validlogin } from '../../utils/valid'
 import { postData } from "../../utils/fetchdata";
 import Head from 'next/head'
 
@@ -18,21 +18,25 @@ const Login = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const errMsg = validlogin(username,password)
-    if (errMsg) console.log(errMsg)
-        console.log('login submitted...')
-    const res = await postData("/auth/login", userData);
-   
-      };
-    
+        try {
+            e.preventDefault();
+            const errMsg = validlogin(username, password)
+            if (errMsg) throw new Error(errMsg.err)
+            const res = await postData("/auth/login", userData);
+            console.log('login submitted...')
+            if(res.err) throw new Error(res.err)
+        } catch (err) {
+            console.log('this is an error', err.message)
+        }
+    };
+
     const closePop = () => dispatch({ type: "CLOSE_LOGIN" })
 
     return (
         <div className={styles.loginPopParent} onMouseDown={closePop}>
-             <Head>
-        <title>IceCase | Login</title>
-      </Head>
+            <Head>
+                <title>IceCase | Login</title>
+            </Head>
             <div className={styles.loginPop} onMouseDown={(e) => e.stopPropagation()}>
                 <span className={styles.x} onClick={closePop}>✕</span>
                 <div className={styles.popLeft}>
@@ -50,7 +54,7 @@ const Login = () => {
                                 value={password}
                                 onChange={handleInputchange}
                             />
-                        <small>Forgot password?</small>
+                            <small>Forgot password?</small>
                         </div>
                         <button type="submit">Login</button>
                     </form>

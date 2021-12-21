@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import React from "react";
 import valid from "../../utils/valid";
-import { postData } from "../../utils/fetchdata";
 import { useDispatch } from "react-redux";
+import styles from '../../styles/sign-up.module.sass'
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -34,33 +34,47 @@ const SignUp = () => {
     }
   };
 
+  const closePop = () => dispatch({ type: "CLOSE_SIGNUP" })
+
   return (
-    <div style={{ backgroundColor: "pink" }}>
-      <h1>Sign up</h1>
-      <form onSubmit={handleSubmit}>
-        <input name="username" value={username} onChange={handleInputchange} />
-        <br />
-        <input name="email" value={email} onChange={handleInputchange} />
-        <br />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleInputchange}
-        />
-        <br />
-        <input
-          type="password"
-          name="cf_password"
-          value={cf_password}
-          onChange={handleInputchange}
-        />
-        <br />
-        <button type="submit" value="Register">
-          Sign up
-        </button>
-      </form>
-      <button onClick={() => dispatch({ type: "CLOSE_SIGNUP" })}>close</button>
+    <div className={styles.signParent}  onMouseDown={closePop}>
+      <div className={styles.signPop}  onMouseDown={(e) => e.stopPropagation()}>
+        <span className={styles.x} onClick={closePop}>✕</span>
+        <h1>Sign up</h1>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.inputSet}>
+            <label>Username</label>
+            <input name="username" value={username} onChange={handleInputchange} />
+          </div>
+
+          <div className={styles.inputSet}>
+            <label>Email</label>
+            <input name="email" value={email} onChange={handleInputchange} />
+          </div>
+          
+          <div className={styles.inputSet}>
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={handleInputchange}
+            />
+          </div>
+
+          <div className={styles.inputSet}>
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="cf_password"
+              value={cf_password}
+              onChange={handleInputchange}
+            />
+          </div>
+          <button type="submit" value="Register">Sign up</button>
+        </form>
+        <p>Already have an account? <span>Login</span></p>
+      </div>
     </div>
   );
 };

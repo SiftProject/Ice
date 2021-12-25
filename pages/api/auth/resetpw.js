@@ -36,19 +36,18 @@ const reset = async (req, res) => {
 
         const pwtoken = createAccessToken({Email: email, Id: crypto.randomBytes(12).toString('hex') })
 
-        const newUser = new Users({
-           username: useremail.username,password: useremail.password, email: useremail, resetpwtoken: pwtoken, ipaddress: useremail.ipaddress
-        })
+      
+        useremail.resetpwtoken = pwtoken
 
-        newUser.save()
+        await useremail.save()
 
         var mailOptions = {
             from: '"Password Reset" noreply@icecase.net',
-            to: email.username,
+            to: email,
             subject: 'IceCase - Password Reset',
-            html: `<h2> ${newUser.username}! You have requested to reset your password.. </h2>
+            html: `<h2> ${useremail.username}! You have requested to reset your password.. </h2>
               <h4>If you didn't request a password reset then ignore this! </h4>
-              <a href="http://${req.headers.host}/api/passwordreset/verify?token=${newUser.resetpwtoken}">Reset password</a>
+              <a href="http://${req.headers.host}/api/passwordreset/verify?token=${pwtoken}">Reset password</a>
             `
           }
           transporter.sendMail(mailOptions, function(error,info) { 

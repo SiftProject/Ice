@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
 
 const CasesSchema = new mongoose.Schema({
+  caseId: {
+    type: String
+  },
   caseName: {
     type: String,
     required: true
   },
-  price: {
+  casePrice: {
     type: Number,
     required: true
   },
@@ -13,10 +16,17 @@ const CasesSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  content: {
+  caseItems: {
       type: Array,
       required: true
-  }
+  },
+  caseType: {
+    type: Array
+  },
+  isHot: {
+    type: Boolean
+  },
+
 
  }, {
      timestamps: true

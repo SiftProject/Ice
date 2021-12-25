@@ -1,6 +1,5 @@
 import styles from './boxes.module.sass'
 import Head from 'next/head'
-import image from 'next/image'
 
 const SingleBox = ({ props }) => {
     const { caseImage, casePrice, isHot, caseType, caseName } = props

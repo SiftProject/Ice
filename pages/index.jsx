@@ -36,7 +36,8 @@ const Boxes = ({ data }) => {
 };
 
 export const getServerSideProps = async (ctx) => {
-  const data = (await get("http://localhost:8080/boxes")).data;
+  const data = (await get("http://localhost:3000/api/cases/get-all")).data;
+  console.log(data)
   return {
     props: {
       data: data,

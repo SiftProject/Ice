@@ -16,7 +16,7 @@ const BoxFilters = ({ setFilters, tag }) => {
 
         <div>
           <select name="cars" id="cars" onChange={changeOption}>
-            <option value="HIGH">Price (Hight to Low)</option>
+            <option value="HIGH">Price (High to Low)</option>
             <option value="LOW">Price (Low to High)</option>
           </select>
         </div>

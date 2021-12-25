@@ -1,7 +1,6 @@
 import connectdb from "../../../utils/connectdb";
 import cases from "../../../models/casesModel";
 
- connectdb();
 
 export default async (req, res) => {
   switch (req.method) {
@@ -13,14 +12,17 @@ export default async (req, res) => {
 
 const getcases = async (req, res) => {
   try {
+    connectdb();
     const rawCase = await cases.find();
     const readyCase = rawCase.map(
-      ({ _id, caseName, price, content, caseImage }) => {
+      ({ caseid, caseName, casePrice, caseItems, caseImage, isHot, caseType}) => {
         return {
-          id: _id,
+          caseid: caseid,
           caseName,
-          price,
-          items: content,
+          casePrice,
+          isHot,
+          caseType: caseType,
+          caseItems: caseItems,
           caseImage,
         };
       }

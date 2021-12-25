@@ -17,12 +17,16 @@ export default async (req, res) => {
         connectdb()
         const {token,  email, password, cf_password } = req.body
 
+        if(!token) return res.json({Error: "Token is missing" })
+
         const user = await Users.findOne({ email })
         const salt = await bcrypt.genSalt(10)
         const passwordHash = await bcrypt.hash(password, salt)
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
-        if(decoded) {
+        if(!decoded) return res.json({Error: "Token incorrect or expired..." })
+
+        if(decoded.Email === email) {
             user.resetpwtoken = null
             user.password = passwordHash
             user.cf_password = passwordHash
@@ -37,6 +41,5 @@ export default async (req, res) => {
 
     
 } catch(error) {
-
-}
+    res.json({Error: "Token either invalid or expired...." })}
 }

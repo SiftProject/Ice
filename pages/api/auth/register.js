@@ -16,7 +16,7 @@ export default async (req, res) => {
   }
 };
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: process.env.GMAIL_USER, 
@@ -44,7 +44,7 @@ const register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt)
 
         const newUser = new Users({
-            username, email, password: passwordHash, cf_password, realtimeipaddress: ip, ipaddress: ip, confirmed: false, emailToken: crypto.randomBytes(64).toString('hex')
+            username, email, password: passwordHash, cf_password, ipaddress: ip,resetpwtoken: null, confirmed: false, emailToken: crypto.randomBytes(64).toString('hex')
         })
        
         await newUser.save()
@@ -53,7 +53,7 @@ const register = async (req, res) => {
         const accesstoken = createAccessToken({User: username})
         const refreshtoken = createRefreshToken({User: username})
         var mailOptions = {
-          from: '"Verify your email" testingicecasemail@gmail.com',
+          from: '"Verify your email" noreply@icecase.net',
           to: newUser.email,
           subject: 'IceCase - Verify your email',
           html: `<h2> ${newUser.username}! Thanks for registering on IceCase </h2>

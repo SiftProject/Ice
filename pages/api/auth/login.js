@@ -11,7 +11,7 @@ import requestIp from 'request-ip'
 
 
 
-export default async (req, res) => {
+export default async  (req, res) => {
     switch(req.method){
         case "POST":
             await login(req, res)

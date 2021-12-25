@@ -2,7 +2,6 @@ import connectdb from "../../../utils/connectdb"
 import Users from "../../../models/userModel"
 import {createAccessToken} from '../../../utils/generateTokens'
 import jwt from 'jsonwebtoken'
-import {createAccessToken} from '../../../utils/generateTokens'
 
 
 connectdb()

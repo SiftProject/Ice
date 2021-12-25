@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import React from "react";
-import valid from "../../utils/valid";
+import { postData } from "../../utils/fetchdata";
+import {validsignup} from "../../utils/valid";
 import { useDispatch } from "react-redux";
 import styles from '../../styles/sign-up.module.sass'
 
@@ -23,11 +24,11 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const errMsg = valid(username, email, password, cf_password);
+      const errMsg = validsignup(username, email, password, cf_password);
       if (errMsg) throw new Error(errMsg);
       console.log(userData);
-      // const res = await postData("/api/auth/register", userData);
-      // if (res.err) throw new Error(res.err);
+       const res = await postData("/auth/register", userData);
+      if (res.err) throw new Error(res.err);
     } catch (err) {
       //TODO: slide Error with the err.message
       console.log(err.message);

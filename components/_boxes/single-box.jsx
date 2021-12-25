@@ -10,14 +10,14 @@ const SingleBox = ({ props }) => {
         <title>IceCase | Cases</title>
       </Head>
             <div className={styles.imagePart}>
-                <image alt="case image" height="170" src={caseImage} />
+                <img alt="case image" height="170" src={caseImage} />
             </div>
 
             <div className={styles.detailPart}>
                 <h1>{caseName}</h1>
                 <div className={styles.tags}>
                     {isHot && <div className={styles.hot}>
-                        <image src="https://cdn.discordapp.com/attachments/765933010733760564/920748346912686151/unknown.png" />
+                        <img src="https://cdn.discordapp.com/attachments/765933010733760564/920748346912686151/unknown.png" />
                         <p>HOT</p>
                         <small>{caseType.join(', ')}</small>
                     </div>}
